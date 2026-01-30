@@ -4,6 +4,7 @@ public class Nova {
     public static void main(String[] args) {
 
         Scanner scan = new Scanner(System.in);
+        
         System.out.println("Hello! I'm Nova");
         System.out.println("What can I do for you?");
         ArrayList<String> taskList = new ArrayList<>();
