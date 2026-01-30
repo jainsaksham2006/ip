@@ -21,7 +21,6 @@ public class Nova {
             }
 
         }
-
         scan.close();
     }
 }
