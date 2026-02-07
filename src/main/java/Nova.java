@@ -8,8 +8,7 @@ public class Nova {
 
         System.out.println("Hello! I'm Nova");
         System.out.println("What can I do for you?");
-        ArrayList<String> taskList = new ArrayList<>();
-        ArrayList<Boolean> doneList = new ArrayList<>();
+        ArrayList<Task> taskList = new ArrayList<>();
 
         while (true) {
 
@@ -23,35 +22,30 @@ public class Nova {
             } else if (userCommand[0].equalsIgnoreCase("list")) {
                 System.out.println("Here are the tasks in your list:");
                 for (int i = 0; i < taskList.size(); i++) {
-                    String status;
-                    if (!doneList.get(i)) {
-                        status = "[ ]";
-                    } else {
-                        status = "[X]";
-                    }
-                    System.out.println((i + 1) + ". " + status + " " + taskList.get(i));
+                    Task task = taskList.get(i);
+                    System.out.println((i + 1) + ". " + task.getStatusIcon() + " " + task.getDescription());
                 }
             } else if (userCommand[0].equalsIgnoreCase("mark") && userCommand.length > 1) {
-                int taskNumber = Integer.parseInt(userCommand[1]) - 1;
-                if (taskNumber >= 0 && taskNumber < taskList.size()) {
-                    doneList.set(taskNumber, true);
-                    System.out.println("Nice! I've marked this task as done:");
-                    System.out.println("  [X] " + taskList.get(taskNumber));
-                }
+                int index = Integer.parseInt(userCommand[1]) - 1;
+                Task task = taskList.get(index);
+                task.markAsDone();
+                System.out.println("Nice! I've marked this task as done:");
+                System.out.println("  " + task.getStatusIcon() + " " + task.getDescription());
+
             } else if (userCommand[0].equalsIgnoreCase("unmark") && userCommand.length > 1) {
-                int taskNumber = Integer.parseInt(userCommand[1]) - 1;
-                if (taskNumber >= 0 && taskNumber < taskList.size()) {
-                    doneList.set(taskNumber, false);
-                    System.out.println("OK, I've marked this task as not done yet:");
-                    System.out.println("  [ ] " + taskList.get(taskNumber));
-                }
+                int index = Integer.parseInt(userCommand[1]) - 1;
+                Task task = taskList.get(index);
+                task.markAsNotDone();
+
+                System.out.println("OK, I've marked this task as not done yet:");
+                System.out.println("  " + task.getStatusIcon() + " " + task.getDescription());
             } else {
-                System.out.println("added: " + userInput);
-                taskList.add(userInput);
-                doneList.add(false);
+                taskList.add(new Task(userInput));
+                System.out.println("Added: " + userInput);
             }
 
         }
         scan.close();
     }
 }
+
