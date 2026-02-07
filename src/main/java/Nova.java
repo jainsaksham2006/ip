@@ -2,6 +2,21 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Nova {
+
+    private static void printTaskList(ArrayList<Task> taskList) {
+        System.out.println("Here are the tasks in your list:");
+        for (int i = 0; i < taskList.size(); i++) {
+            Task task = taskList.get(i);
+            System.out.println((i + 1) + ". " + task);
+        }
+    }
+
+    private static void printTaskAdded(Task task, ArrayList<Task> taskList) {
+        System.out.println("Got it. I've added this task:");
+        System.out.println("  " + task);
+        System.out.println("Now you have " + taskList.size() + " tasks in the list.");
+    }
+
     public static void main(String[] args) {
 
         Scanner scan = new Scanner(System.in);
@@ -20,11 +35,8 @@ public class Nova {
                 break;
 
             } else if (userCommand[0].equalsIgnoreCase("list")) {
-                System.out.println("Here are the tasks in your list:");
-                for (int i = 0; i < taskList.size(); i++) {
-                    Task task = taskList.get(i);
-                    System.out.println((i + 1) + ". " + task);
-                }
+                    printTaskList(taskList);
+
             } else if (userCommand[0].equalsIgnoreCase("mark") && userCommand.length > 1) {
                 int index = Integer.parseInt(userCommand[1]) - 1;
                 Task task = taskList.get(index);
@@ -43,10 +55,7 @@ public class Nova {
                 String description = userInput.substring(5).trim();
                 Task task = new Todo(description);
                 taskList.add(task);
-
-                System.out.println("Got it. I've added this task:");
-                System.out.println("  " + task);
-                System.out.println("Now you have " + taskList.size() + " tasks in the list.");
+                printTaskAdded(task, taskList);
             } else if (userCommand[0].equalsIgnoreCase("deadline") && userCommand.length > 1) {
                 String fullCommand = String.join(" ", userCommand);
                 String[] parts = fullCommand.split("/by");
@@ -54,10 +63,8 @@ public class Nova {
                 String by = parts[1].trim();;
                 Task task = new Deadline(description, by);
                 taskList.add(task);
+                printTaskAdded(task, taskList);
 
-                System.out.println("Got it. I've added this task:");
-                System.out.println(" " + task);
-                System.out.println("Now you have " + taskList.size() + " tasks in the list.");
             } else if (userCommand[0].equalsIgnoreCase("event") && userCommand.length > 1) {
                 String fullCommand = String.join(" ", userCommand);
                 String[] parts = fullCommand.split("/from");
@@ -66,11 +73,9 @@ public class Nova {
                 String startTime = duration[0].trim();;
                 String endTime = duration[1].trim();;
                 Task task = new Event(description, startTime, endTime);
-                
                 taskList.add(task);
-                System.out.println("Got it. I've added this task:");
-                System.out.println(" " + task);
-                System.out.println("Now you have " + taskList.size() + " tasks in the list.");
+                printTaskAdded(task, taskList);
+
             } else {
                 taskList.add(new Task(userInput));
                 System.out.println("Added: " + userInput);
