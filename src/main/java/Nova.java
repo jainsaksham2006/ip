@@ -23,14 +23,14 @@ public class Nova {
                 System.out.println("Here are the tasks in your list:");
                 for (int i = 0; i < taskList.size(); i++) {
                     Task task = taskList.get(i);
-                    System.out.println((i + 1) + ". " + task.getStatusIcon() + " " + task.getDescription());
+                    System.out.println((i + 1) + ". " + task);
                 }
             } else if (userCommand[0].equalsIgnoreCase("mark") && userCommand.length > 1) {
                 int index = Integer.parseInt(userCommand[1]) - 1;
                 Task task = taskList.get(index);
                 task.markAsDone();
                 System.out.println("Nice! I've marked this task as done:");
-                System.out.println("  " + task.getStatusIcon() + " " + task.getDescription());
+                System.out.println("  " + task);
 
             } else if (userCommand[0].equalsIgnoreCase("unmark") && userCommand.length > 1) {
                 int index = Integer.parseInt(userCommand[1]) - 1;
@@ -38,7 +38,39 @@ public class Nova {
                 task.markAsNotDone();
 
                 System.out.println("OK, I've marked this task as not done yet:");
-                System.out.println("  " + task.getStatusIcon() + " " + task.getDescription());
+                System.out.println("  " + task);
+            } else if (userCommand[0].equalsIgnoreCase("todo")) {
+                String description = userInput.substring(5).trim();
+                Task task = new Todo(description);
+                taskList.add(task);
+
+                System.out.println("Got it. I've added this task:");
+                System.out.println("  " + task);
+                System.out.println("Now you have " + taskList.size() + " tasks in the list.");
+            } else if (userCommand[0].equalsIgnoreCase("deadline") && userCommand.length > 1) {
+                String fullCommand = String.join(" ", userCommand);
+                String[] parts = fullCommand.split("/by");
+                String description = parts[0].replace("deadline", "").trim();
+                String by = parts[1].trim();;
+                Task task = new Deadline(description, by);
+                taskList.add(task);
+
+                System.out.println("Got it. I've added this task:");
+                System.out.println(" " + task);
+                System.out.println("Now you have " + taskList.size() + " tasks in the list.");
+            } else if (userCommand[0].equalsIgnoreCase("event") && userCommand.length > 1) {
+                String fullCommand = String.join(" ", userCommand);
+                String[] parts = fullCommand.split("/from");
+                String description = parts[0].replace("event", "").trim();
+                String[] duration = parts[1].split("/to", 2);
+                String startTime = duration[0].trim();;
+                String endTime = duration[1].trim();;
+                Task task = new Event(description, startTime, endTime);
+                
+                taskList.add(task);
+                System.out.println("Got it. I've added this task:");
+                System.out.println(" " + task);
+                System.out.println("Now you have " + taskList.size() + " tasks in the list.");
             } else {
                 taskList.add(new Task(userInput));
                 System.out.println("Added: " + userInput);

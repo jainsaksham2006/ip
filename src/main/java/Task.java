@@ -7,6 +7,10 @@ public class Task {
         this.isDone = false;
     }
 
+
+    public String toString() {
+        return getStatusIcon() + " " + description;
+    }
     public void markAsDone() {
         isDone = true;
     }
@@ -24,7 +28,7 @@ public class Task {
     }
 
     public String getDescription() {
-        
+
         return description;
     }
 }
