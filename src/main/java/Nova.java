@@ -27,17 +27,28 @@ public class Nova {
 
         while (true) {
 
-            String userInput = scan.nextLine();
-            String[] userCommand = userInput.trim().split("\\s+");
+            String userInput = scan.nextLine().trim();
 
+            if (userInput.isEmpty()) {
+                System.out.println("Please enter a command. I didn't catch anything.");
+                continue;
+            }
+
+            String[] userCommand = userInput.split("\\s+");
             if (userCommand[0].equalsIgnoreCase("bye")) {
                 System.out.println("Bye. Hope to see you again soon!");
                 break;
 
             } else if (userCommand[0].equalsIgnoreCase("list")) {
-                    printTaskList(taskList);
+                printTaskList(taskList);
 
             } else if (userCommand[0].equalsIgnoreCase("mark") && userCommand.length > 1) {
+
+                if (userCommand.length < 2) {
+                    System.out.println("Please specify which task number to mark.");
+                    continue;
+                }
+
                 int index = Integer.parseInt(userCommand[1]) - 1;
                 Task task = taskList.get(index);
                 task.markAsDone();
@@ -45,6 +56,12 @@ public class Nova {
                 System.out.println("  " + task);
 
             } else if (userCommand[0].equalsIgnoreCase("unmark") && userCommand.length > 1) {
+
+                if (userCommand.length < 2) {
+                    System.out.println("Please specify which task number to unmark.");
+                    continue;
+                }
+
                 int index = Integer.parseInt(userCommand[1]) - 1;
                 Task task = taskList.get(index);
                 task.markAsNotDone();
@@ -53,10 +70,20 @@ public class Nova {
                 System.out.println("  " + task);
             } else if (userCommand[0].equalsIgnoreCase("todo")) {
                 String description = userInput.substring(5).trim();
+                if(description.isEmpty()){
+                    System.out.println("A todo needs a description. Please tell me what to do.");
+                    continue;
+                }
                 Task task = new Todo(description);
                 taskList.add(task);
                 printTaskAdded(task, taskList);
             } else if (userCommand[0].equalsIgnoreCase("deadline") && userCommand.length > 1) {
+
+                if (!userInput.contains("/by")) {
+                    System.out.println("A deadline needs a /by date. Example: deadline homework /by Sunday");
+                    continue;
+                }
+
                 String fullCommand = String.join(" ", userCommand);
                 String[] parts = fullCommand.split("/by");
                 String description = parts[0].replace("deadline", "").trim();
@@ -66,6 +93,11 @@ public class Nova {
                 printTaskAdded(task, taskList);
 
             } else if (userCommand[0].equalsIgnoreCase("event") && userCommand.length > 1) {
+
+                if (!userInput.contains("/from") || !userInput.contains("/to")) {
+                    System.out.println("An event needs /from and /to times.");
+                    continue;
+                }
                 String fullCommand = String.join(" ", userCommand);
                 String[] parts = fullCommand.split("/from");
                 String description = parts[0].replace("event", "").trim();
@@ -77,8 +109,7 @@ public class Nova {
                 printTaskAdded(task, taskList);
 
             } else {
-                taskList.add(new Task(userInput));
-                System.out.println("Added: " + userInput);
+                System.out.println("I don't recognize that command.");
             }
 
         }
