@@ -9,6 +9,7 @@ public class Nova {
             Task task = taskList.get(i);
             System.out.println((i + 1) + ". " + task);
         }
+
     }
 
     private static void printTaskAdded(Task task, ArrayList<Task> taskList) {
@@ -42,7 +43,7 @@ public class Nova {
             } else if (userCommand[0].equalsIgnoreCase("list")) {
                 printTaskList(taskList);
 
-            } else if (userCommand[0].equalsIgnoreCase("mark") && userCommand.length > 1) {
+            } else if (userCommand[0].equalsIgnoreCase("mark")) {
 
                 if (userCommand.length < 2) {
                     System.out.println("Please specify which task number to mark.");
@@ -55,7 +56,7 @@ public class Nova {
                 System.out.println("Nice! I've marked this task as done:");
                 System.out.println("  " + task);
 
-            } else if (userCommand[0].equalsIgnoreCase("unmark") && userCommand.length > 1) {
+            } else if (userCommand[0].equalsIgnoreCase("unmark")) {
 
                 if (userCommand.length < 2) {
                     System.out.println("Please specify which task number to unmark.");
