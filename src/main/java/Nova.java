@@ -24,6 +24,8 @@ public class Nova {
 
         System.out.println("Hello! I'm Nova");
         System.out.println("What can I do for you?");
+
+        // Using ArrayList (Java Collection) to store tasks dynamically
         ArrayList<Task> taskList = new ArrayList<>();
 
         while (true) {
