@@ -122,7 +122,7 @@ public class Nova {
 
 
             } else if (userCommand[0].equalsIgnoreCase("event") && userCommand.length > 1) {
-                try{
+                try {
                     if (!userInput.contains("/from") || !userInput.contains("/to")) {
                         System.out.println("An event needs /from and /to times.");
                         continue;
@@ -132,24 +132,43 @@ public class Nova {
                     String[] parts = fullCommand.split("/from");
                     String description = parts[0].replace("event", "").trim();
                     String[] duration = parts[1].split("/to", 2);
-                    String startTime = duration[0].trim();;
-                    String endTime = duration[1].trim();;
+                    String startTime = duration[0].trim();
+                    ;
+                    String endTime = duration[1].trim();
+                    ;
 
-                    if(startTime.isEmpty() || endTime.isEmpty()){
+                    if (startTime.isEmpty() || endTime.isEmpty()) {
                         System.out.println("Event time cannot be empty.");
                         continue;
                     }
-                    if(description.isEmpty()){
+                    if (description.isEmpty()) {
                         System.out.println("Event description cannot be empty.");
                         continue;
                     }
                     Task task = new Event(description, startTime, endTime);
                     taskList.add(task);
                     printTaskAdded(task, taskList);
-                }catch(Exception e){
+                } catch (Exception e) {
                     System.out.println("Invalid Event Format.");
                 }
+            } else if(userCommand[0].equalsIgnoreCase("delete")){
 
+                if(userCommand.length < 2){
+                    System.out.println("Please specify which task number to delete.");
+                    continue;
+                }
+
+                try{
+                    int index = Integer.parseInt(userCommand[1]) - 1;
+                    Task task = taskList.remove(index);
+                    System.out.println("Noted. I've removed this task:");
+                    System.out.println(" " + task);
+                    System.out.println("Now you have " + taskList.size() + " tasks in the list.");
+                }catch(NumberFormatException e){
+                    System.out.println("Task number must be a valid number.");
+                }catch(IndexOutOfBoundsException e){
+                    System.out.println("That task number does not exist.");
+                }
             } else {
                 System.out.println("I don't recognize that command.");
             }
