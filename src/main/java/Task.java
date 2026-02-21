@@ -19,6 +19,9 @@ public class Task {
         isDone = false;
     }
 
+    public boolean isDone() {
+        return isDone;
+    }
     public String getStatusIcon() {
         if(isDone == true){
             return "[X]";
