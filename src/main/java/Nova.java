@@ -148,7 +148,19 @@ public class Nova {
                 command.execute(tasks, ui, storage);
 
 
-            } else {
+            } else if (userCommand[0].equalsIgnoreCase("find")) {
+
+                if (userCommand.length < 2) {
+                    ui.showError("Please provide a keyword to search.");
+                    continue;
+                }
+
+                String keyword = userInput.substring(5).trim();
+
+                Command command = new FindCommand(keyword);
+                command.execute(tasks, ui, storage);
+
+            }else {
                 ui.showError("I don't recognize that command.");
             }
         }
