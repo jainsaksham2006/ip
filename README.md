@@ -1,26 +1,228 @@
-# Duke project template
+# Nova User Guide
 
-This is a project template for a greenfield Java project. It's named after the Java mascot _Duke_. Given below are instructions on how to use it.
+Nova is a **command-line task manager chatbot** that helps you organize and track your tasks efficiently.
+Using simple text commands, you can manage **todos, deadlines, and events**, mark tasks as done, delete tasks, and search for tasks.
 
-## Setting up in Intellij
+---
 
-Prerequisites: JDK 17, update Intellij to the most recent version.
+# Quick Start
 
-1. Open Intellij (if you are not in the welcome screen, click `File` > `Close Project` to close the existing project first)
-1. Open the project into Intellij as follows:
-   1. Click `Open`.
-   1. Select the project directory, and click `OK`.
-   1. If there are any further prompts, accept the defaults.
-1. Configure the project to use **JDK 17** (not other versions) as explained in [here](https://www.jetbrains.com/help/idea/sdk.html#set-up-jdk).<br>
-   In the same dialog, set the **Project language level** field to the `SDK default` option.
-1. After that, locate the `src/main/java/Duke.java` file, right-click it, and choose `Run Duke.main()` (if the code editor is showing compile errors, try restarting the IDE). If the setup is correct, you should see something like the below as the output:
-   ```
-   Hello from
-    ____        _        
-   |  _ \ _   _| | _____ 
-   | | | | | | | |/ / _ \
-   | |_| | |_| |   <  __/
-   |____/ \__,_|_|\_\___|
-   ```
+Follow these steps to start using Nova.
 
-**Warning:** Keep the `src\main\java` folder as the root folder for Java files (i.e., don't rename those folders or move Java files to another folder outside of this folder path), as this is the default location some tools (e.g., Gradle) expect to find Java files.
+1. Ensure **Java 17 or later** is installed on your computer.
+2. Download the latest `Nova.jar` file from the project releases.
+3. Open a terminal in the folder containing the jar file.
+4. Run the command:
+
+```
+java -jar Nova.jar
+```
+
+5. You should see the welcome message:
+
+```
+Hello! I'm Nova
+What can I do for you?
+```
+
+You can now start entering commands.
+
+---
+
+# Command Summary
+
+| Command                                 | Description                         |
+| --------------------------------------- | ----------------------------------- |
+| `todo DESCRIPTION`                      | Adds a new todo task                |
+| `deadline DESCRIPTION /by DATE`         | Adds a task with a deadline         |
+| `event DESCRIPTION /from START /to END` | Adds an event with a time range     |
+| `list`                                  | Displays all tasks                  |
+| `mark TASK_NUMBER`                      | Marks a task as completed           |
+| `unmark TASK_NUMBER`                    | Marks a task as not completed       |
+| `delete TASK_NUMBER`                    | Deletes a task                      |
+| `find KEYWORD`                          | Searches tasks containing a keyword |
+| `bye`                                   | Exits the chatbot                   |
+
+---
+
+# Features
+
+## Adding a Todo
+
+Adds a simple task without any associated date or time.
+
+**Format**
+
+```
+todo DESCRIPTION
+```
+
+**Example**
+
+```
+todo read book
+```
+
+---
+
+## Adding a Deadline
+
+Adds a task that must be completed before a specified date.
+
+**Format**
+
+```
+deadline DESCRIPTION /by DATE
+```
+
+**Example**
+
+```
+deadline return book /by Sunday
+```
+
+---
+
+## Adding an Event
+
+Adds a task that occurs within a specific time period.
+
+**Format**
+
+```
+event DESCRIPTION /from START /to END
+```
+
+**Example**
+
+```
+event project meeting /from Mon 2pm /to 4pm
+```
+
+---
+
+## Listing Tasks
+
+Displays all tasks currently stored in Nova.
+
+**Format**
+
+```
+list
+```
+
+**Example Output**
+
+```
+Here are the tasks in your list:
+1. [T][ ] read book
+2. [D][ ] return book (by: Sunday)
+```
+
+---
+
+## Marking a Task as Done
+
+Marks a task as completed.
+
+**Format**
+
+```
+mark TASK_NUMBER
+```
+
+**Example**
+
+```
+mark 2
+```
+
+---
+
+## Unmarking a Task
+
+Marks a completed task as not done.
+
+**Format**
+
+```
+unmark TASK_NUMBER
+```
+
+**Example**
+
+```
+unmark 2
+```
+
+---
+
+## Deleting a Task
+
+Removes a task from the task list.
+
+**Format**
+
+```
+delete TASK_NUMBER
+```
+
+**Example**
+
+```
+delete 3
+```
+
+---
+
+## Finding Tasks
+
+Searches for tasks that contain a specific keyword in their description.
+
+**Format**
+
+```
+find KEYWORD
+```
+
+**Example**
+
+```
+find book
+```
+
+**Example Output**
+
+```
+Here are the matching tasks in your list:
+1. [T][ ] read book
+2. [D][ ] return book (by: Sunday)
+```
+
+---
+
+## Exiting Nova
+
+Closes the chatbot.
+
+**Format**
+
+```
+bye
+```
+
+---
+
+# Notes
+
+* Commands are **case-insensitive** (`LIST`, `List`, `list` all work).
+* Task numbers correspond to the order shown in the **list command**.
+* Ensure commands follow the correct format to avoid errors.
+
+---
+
+# Data Storage
+
+Nova automatically saves tasks to a local file so that your tasks remain available even after the program is closed.
+The task data is stored locally and will be loaded again when Nova starts.
+
