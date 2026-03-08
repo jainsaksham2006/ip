@@ -4,15 +4,25 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * Handles loading tasks from a file and saving tasks to a file.
+ * Tasks are stored in a text file using a simple structured format.
+ */
 public class Storage {
     private String filePath = "./data/duke.txt";
 
+    /**
+     * Loads tasks from the storage file.
+     *
+     * @return a list of tasks loaded from the file
+     */
     public ArrayList<Task> load() {
         ArrayList<Task> taskList = new ArrayList<>();
 
         try{
             File f = new File(filePath);
 
+            // Create the file and directory if they do not exist
             if (!f.exists()) {
                 f.getParentFile().mkdirs();
                 f.createNewFile();
@@ -63,6 +73,12 @@ public class Storage {
         }
         return taskList;
     }
+
+    /**
+     * Saves the current task list to the storage file.
+     *
+     * @param taskList the list of tasks to be saved
+     */
     public void save(ArrayList<Task> taskList) {
         PrintWriter writer = null;
 
