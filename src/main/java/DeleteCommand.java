@@ -1,11 +1,28 @@
+/**
+ * Command that deletes a task from the task list.
+ */
+
 public class DeleteCommand extends Command {
 
     private String[] userCommand;
 
+    /**
+     * Constructs a DeleteCommand using the parsed user command.
+     *
+     * @param userCommand the command entered by the user
+     */
     public DeleteCommand(String[] userCommand) {
         this.userCommand = userCommand;
     }
 
+    /**
+     * Executes the delete command by removing the specified task
+     * from the task list and saving the updated list to storage.
+     *
+     * @param tasks the task list containing all tasks
+     * @param ui the UI used for displaying messages
+     * @param storage the storage used to persist tasks
+     */
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) {
 
@@ -15,6 +32,8 @@ public class DeleteCommand extends Command {
         }
 
         try {
+
+            // Convert user task number to list index
             int index = Integer.parseInt(userCommand[1]) - 1;
             Task task = tasks.delete(index);
 

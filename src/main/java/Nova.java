@@ -1,15 +1,31 @@
+import java.util.*;
+
+/**
+ * Main class for the Nova.
+ * It initializes the UI, storage and task list,
+ * and runs the main command loop for user interaction.
+ */
+
 public class Nova {
 
     private Storage storage;
     private TaskList tasks;
     private Ui ui;
 
+    /**
+     * Constructs a Nova chatbot.
+     * Loads tasks from storage and prepares UI.
+     */
     public Nova() {
         ui = new Ui();
         storage = new Storage();
         tasks = new TaskList(storage.load());
     }
 
+    /**
+     * Runs the chatbot loop, reading and executing user commands
+     * until the user exits the program.
+     */
     public void run() {
 
         ui.showWelcome();
@@ -23,6 +39,7 @@ public class Nova {
                 continue;
             }
 
+            // Parse the command into words
             String[] userCommand = Parser.parse(userInput);
 
             if (userCommand[0].equalsIgnoreCase("bye")) {
@@ -49,6 +66,7 @@ public class Nova {
                     continue;
                 }
 
+                // Extract description after the command word
                 String description = userInput.substring(5).trim();
 
                 if (description.isEmpty()) {
@@ -78,6 +96,7 @@ public class Nova {
                     String fullCommand = String.join(" ", userCommand);
                     String[] parts = fullCommand.split("/by");
 
+                    // Extract deadline description and date
                     String description = parts[0].replace("deadline", "").trim();
                     String by = parts[1].trim();
 
@@ -117,6 +136,7 @@ public class Nova {
                     String fullCommand = String.join(" ", userCommand);
                     String[] parts = fullCommand.split("/from");
 
+                    // Extract event description and time range
                     String description = parts[0].replace("event", "").trim();
                     String[] duration = parts[1].split("/to", 2);
 
@@ -155,6 +175,7 @@ public class Nova {
                     continue;
                 }
 
+                // Extract keyword after "find"
                 String keyword = userInput.substring(5).trim();
 
                 Command command = new FindCommand(keyword);
@@ -166,6 +187,9 @@ public class Nova {
         }
     }
 
+    /**
+     * Starts the Nova chatbot.
+     */
     public static void main(String[] args) {
         new Nova().run();
     }
